@@ -1,0 +1,217 @@
+
+body {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+}
+
+
+  .btn-primary {
+    background: #7B1FA2;
+    color: white;
+    text-transform: uppercase;
+    padding: 10px 150px;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: all 300ms ease;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 600px){
+    .btn-primary {
+      padding: 10px 100px;
+    }
+  } 
+  .btn-primary:hover {
+    background: #3f214d;
+    cursor: pointer;
+  }
+ 
+  .texto{
+   margin: auto;
+   padding: 40px 0px ;
+   width: 300px;
+  }
+  .h2{
+    margin: 0 auto;
+    margin-top: 150px;
+    margin-bottom: 25px;
+    color: #7B1FA2;
+    font-size: larger;
+    font-size: 27px;
+    font-family: 'Poppins', sans-serif;
+  }
+  .h2debaixo{
+    margin: 0 auto;
+    margin-top: 80px;
+    margin-bottom: 1px;
+    color: #7B1FA2;
+    font-size: larger;
+    font-size: 27px;
+    font-family: 'Poppins', sans-serif;
+  }
+  #navbar {
+    display: flex;
+    background-color:  #7B1FA2;
+    color: rgb(255, 255, 255);
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+      .navbar-container {
+        width: 13%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+  
+
+  .box2{
+    width: 100%;
+    right: 40px;
+    background-color: white;
+  }
+  .box3{
+    margin: 0 auto;
+    width: 100%;
+    height: 360px;
+    float:none
+    
+  }
+  
+
+  .background{
+    background: url(home_background.png) center center/cover;
+    background-color: rgba(0, 0, 0, 0.6);
+    background-blend-mode: color;
+    margin: 0 auto;
+    width: 80%;
+    height: 360px;
+    float:none
+  }
+  @media screen and (max-width: 1200px){
+    .background {
+ width: 90%;
+    }
+  } 
+  @media screen and (max-width: 800px){
+    .background {
+ width: 95%;
+    }
+  } 
+  @media screen and (max-width: 600px){
+    .background {
+ width: 100%;
+    }
+  } 
+   .caixa1{
+    padding-bottom: 100px;
+    width: 300px;
+    height: 300px;
+    float: left;
+    padding: 10px 100px 100px 100px;
+    text-align: center;
+   }
+   @media screen and (max-width: 800px){
+    .caixa1{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+ margin-bottom: 100px;
+    }
+  } 
+
+   .imagem1{
+    max-width:250px;
+    max-height:250px;
+    width: auto;
+    height: auto;
+    
+   }
+   @media screen and (max-width: 800px){
+    .imagem1{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+
+    }
+  } 
+   .caixa2{
+    padding-left: 1%;
+    padding-bottom: 100px;
+    width: 300px;
+    height: 300px;
+    float: left;
+    padding: 10px 100px 100px 100px;
+    text-align: center;
+   }
+   @media screen and (max-width: 800px){
+    .caixa2{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+ margin-bottom: 100px;
+
+    }
+  } 
+   .imagem2{
+    max-width:250px;
+    max-height:250px;
+    width: auto;
+    height: auto;
+   }
+   @media screen and (max-width: 800px){
+    .imagem2{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+
+    }
+  } 
+   
+   .caixa3{
+    padding-left: 1%;
+    width: 300px;
+    height: 300px;
+    float: left;
+    padding: 10px 100px 100px 100px;
+    text-align: center;
+   }
+   @media screen and (max-width: 800px){
+    .caixa3{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+ margin-bottom: 100px;
+
+    }
+  } 
+
+   .imagem3{
+    max-width:250px;
+    max-height:250px;
+    width: auto;
+    height: auto;
+   }
+   @media screen and (max-width: 800px){
+    .imagem3{
+ margin: 0 auto;
+ width: 200px;
+ height: 200px;
+
+    }
+  } 
+
+   .box3{
+    margin: auto;
+   }
+   @media screen and (max-width: 800px){
+    .box5{
+ margin: 0 auto;
+    }
+  } 
+  
