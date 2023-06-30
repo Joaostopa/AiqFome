@@ -1,3 +1,7 @@
+  
+
+  /* */
+
 class Alerta {
     static exibir(mensagem) {
       window.alert(mensagem);
@@ -34,42 +38,9 @@ class Alerta {
       selectedCitySpan.textContent = "Sua cidade é: " + cityName;
     }
   
-    static filtrarCidades() {
-      const searchInput = window.prompt("Digite o nome da cidade:");
-      if (searchInput) {
-        const filter = searchInput.toUpperCase();
-        const cityDropdown = document.getElementById("cityDropdown");
-        const cities = cityDropdown.getElementsByTagName("a");
-  
-        for (let i = 0; i < cities.length; i++) {
-          const cityName = cities[i].textContent || cities[i].innerText;
-          if (cityName.toUpperCase().indexOf(filter) > -1) {
-            cities[i].style.display = "";
-          } else {
-            cities[i].style.display = "none";
-          }
-        }
-      }
-    }
-  }
-  
-  class Postagem {
-    static criar() {
-      const titleInput = document.getElementById("postTitle");
-      const contentInput = document.getElementById("postContent");
-  
-      const newPost = {
-        id: posts.length + 1,
-        title: titleInput.value,
-        content: contentInput.value
-      };
-  
-      posts.push(newPost);
-      Postagem.exibir(); // Atualiza a exibição das postagens após a criação
-      titleInput.value = "";
-      contentInput.value = "";
     }
   
+
     static exibir() {
       const postsContainer = document.getElementById("postsContainer");
       postsContainer.innerHTML = ""; // Limpa o conteúdo atual
@@ -90,30 +61,4 @@ class Alerta {
       posts = posts.filter(post => post.id !== postId);
       Postagem.exibir(); // Atualiza a exibição das postagens após a exclusão
     }
-  }
-  
-  // Exemplo de uso
-  
-  Alerta.exibir("Seja bem-vindo");
-  SelecaoCidade.obterCidades();
-  Postagem.exibir();
-  
-  // Função para filtrar cidades usando uma caixa de diálogo
-  function filterCities() {
-    const searchInput = window.prompt("Digite o nome da cidade:");
-    if (searchInput) {
-      const filter = searchInput.toUpperCase();
-      const cityDropdown = document.getElementById("cityDropdown");
-      const cities = cityDropdown.getElementsByTagName("a");
-  
-      for (let i = 0; i < cities.length; i++) {
-        const cityName = cities[i].textContent || cities[i].innerText;
-        if (cityName.toUpperCase().indexOf(filter) > -1) {
-          cities[i].style.display = "";
-        } else {
-          cities[i].style.display = "none";
-        }
-      }
-    }
-  }
   

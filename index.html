@@ -136,8 +136,13 @@
   </script>
 </head>
 <body>
+  <navbar id="navbar">
+    <div class="navbar-container">
+        <img src="logo navbar.png" alt="" class="logo" />
+    </div>
+</navbar>
   <div class="box1">
-    <img src="aiqfomelogo.png" alt="aiqfome logo" class="logo">
+    <img src="logo navbar.png" alt="aiqfome logo" class="logo">
     <span class="selected-city" id="selectedCity"></span>
     <div id="cityDropdown" class="dropdown-content"></div>
   </div>
@@ -177,38 +182,115 @@
     <h3 style="color: rgb(22, 145, 145);"> procura algo especial?.</h3>
     <p style="color: rgb(97, 95, 95);">busca e experimenta pratos variados.</p>
   </div>
+  
 
-  <div class="box8">
-    <h3 class="titulo" style="color: rgb(22, 145, 145);"> conheça nosso delivery.</h3>
-    <p class="text" style="color: rgb(97, 95, 95);">experimente a forma mais fácil de pedir delivery em sua cidade.</p>
-  </div>
+  <title>Comentários</title>
+  <style>
+    .comment {
+      margin-bottom: 10px;
+    }
+    .comment-content {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 10px;
+    }
+    .comment-actions {
+      display: inline-block;
+    }
+    .comment-actions button {
+      margin-right: 5px;
+    }
+  </style>
 
-  <div class="box9">
-    <h3 class="titulo2" style="color: rgb(22, 145, 145);">depoimentos</h3>
-    <div id="postsContainer"></div>
-  </div>
+  <h2 class="coment">Comentários</h2>
+  <div id="comments"></div>
 
-  <div class="box10">
-    <h3 class="titulo3" style="color: rgb(22, 145, 145);">deixe seu depoimento</h3>
-    <div>
-      <input type="text" id="postTitle" placeholder="Título do depoimento">
-      <textarea id="postContent" placeholder="Conteúdo do depoimento"></textarea>
-      <button onclick="Postagem.criar()">Criar Depoimento</button>
-    </div>
-  </div>
+  <h3>Deixe seu Comentário</h3>
+  <input type="text" id="nameInput" placeholder="Seu Nome">
+  <br>
+  <textarea id="commentInput" placeholder="Deixe seu Comentário"></textarea>
+  <br>
+  <button onclick="addComment()">Adicionar Comentário</button>
 
-  <div class="box11">
-    <h3 class="titulo4" style="color: rgb(22, 145, 145);">filtrar cidades</h3>
-    <button onclick="filterCities()">Filtrar Cidades</button>
-  </div>
+  <script>
+    // Carregar os comentários da localStorage
+    window.addEventListener("DOMContentLoaded", function() {
+      const comments = JSON.parse(localStorage.getItem("comments")) || [];
+      renderComments(comments);
+    });
 
-  <div class="box12">
-    <h3 class="titulo5" style="color: rgb(22, 145, 145);">nossos serviços</h3>
-    <ul>
-      <li>Delivery de Restaurantes</li>
-      <li>Delivery de Pet Shop</li>
-      <li>Delivery de Conveniências</li>
-    </ul>
-  </div>
+    function saveComments(comments) {
+      localStorage.setItem("comments", JSON.stringify(comments));
+    }
+
+    function addComment() {
+      const name = document.getElementById("nameInput").value;
+      const comment = document.getElementById("commentInput").value;
+
+      if (name.trim() === "" || comment.trim() === "") {
+        alert("Digite um nome e um comentário válidos!");
+        return;
+      }
+
+      const comments = JSON.parse(localStorage.getItem("comments")) || [];
+      comments.push({ name, comment });
+      saveComments(comments);
+
+      renderComments(comments);
+
+      document.getElementById("nameInput").value = "";
+      document.getElementById("commentInput").value = "";
+    }
+
+    function editComment(button) {
+      const commentElement = button.parentNode.parentNode;
+      const commentContentElement = commentElement.querySelector(".comment-content");
+      const commentTextElement = commentContentElement.querySelector("span");
+      const commentText = commentTextElement.textContent;
+
+      const newCommentText = prompt("Editar Comentário:", commentText);
+
+      if (newCommentText !== null) {
+        commentTextElement.textContent = newCommentText;
+
+        const comments = JSON.parse(localStorage.getItem("comments")) || [];
+        const index = Array.from(commentElement.parentNode.children).indexOf(commentElement);
+        comments[index].comment = newCommentText;
+        saveComments(comments);
+      }
+    }
+
+    function deleteComment(button) {
+      const commentElement = button.parentNode.parentNode;
+      const comments = JSON.parse(localStorage.getItem("comments")) || [];
+      const index = Array.from(commentElement.parentNode.children).indexOf(commentElement);
+      comments.splice(index, 1);
+      saveComments(comments);
+
+      commentElement.remove();
+    }
+
+    function renderComments(comments) {
+      const commentsContainer = document.getElementById("comments");
+      commentsContainer.innerHTML = "";
+
+      for (let i = 0; i < comments.length; i++) {
+        const commentElement = document.createElement("div");
+        commentElement.className = "comment";
+        commentElement.innerHTML = `
+          <div class="comment-content">
+            <strong>${comments[i].name}:</strong>
+            <span>${comments[i].comment}</span>
+          </div>
+          <div class="comment-actions">
+            <button onclick="editComment(this)">Editar</button>
+            <button onclick="deleteComment(this)">Excluir</button>
+          </div>
+        `;
+
+        commentsContainer.appendChild(commentElement);
+      }
+    }
+  </script>
 </body>
 </html>
