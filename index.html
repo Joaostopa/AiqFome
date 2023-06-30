@@ -19,33 +19,30 @@
       }
     }
 
-    class SelecaoCidade {
-      static confirmar() {
-        const city = window.prompt("Escolha sua cidade:");
-        if (city) {
-          SelecaoCidade.selecionar(city);
-        }
-      }
-
-      static filtrarCidades() {
-        const searchInput = window.prompt("Digite o nome da cidade:");
-        if (searchInput) {
-          const filter = searchInput.toUpperCase();
-          const cityDropdown = document.getElementById("cityDropdown");
-          const cities = cityDropdown.getElementsByTagName("a");
-
-          for (let i = 0; i < cities.length; i++) {
-            const cityName = cities[i].textContent || cities[i].innerText;
-            if (cityName.toUpperCase().indexOf(filter) > -1) {
-              cities[i].style.display = "";
-            } else {
-              cities[i].style.display = "none";
+  // Função para exibir a caixa de diálogo e salvar a cidade no LocalStorage
+  function exibirCaixaDialogo() {
+            var cidade = prompt("Qual é a sua cidade?");
+            if (cidade != null && cidade !== "") {
+                localStorage.setItem("cidade", cidade);
+                exibirCidade();
             }
-          }
         }
-      }
-    }
 
+        // Função para exibir a cidade na tela
+        function exibirCidade() {
+            var cidade = localStorage.getItem("cidade");
+            var cidadeElemento = document.getElementById("cidade");
+            cidadeElemento.innerHTML = "Você está em: " + cidade;
+            cidadeElemento.style.display = "block";
+        }
+
+        // Função para limpar a cidade da página e do LocalStorage
+        function limparCidade() {
+            localStorage.removeItem("cidade");
+            var cidadeElemento = document.getElementById("cidade");
+            cidadeElemento.innerHTML = "";
+            cidadeElemento.style.display = "none";
+        }
 
   </script>
 </head>
@@ -67,9 +64,58 @@
         <p style="text-align: center; color: white;">oie, bem-vindo à fominhaland, eu serei sua guia pelo mundo do delivery. aqui à sua direita vemos a vila burguer, ali à sua esquerda temos o parque das pizzas, e logo à frente fica o maravilhoso banco de cupons. divirta-se! \o/</p>
       </div>
       <div style="text-align: center;">
+        <body>
+          <button id="openDialogButton" class="botoes">CLIQUE AQUI E DIGA SUA CIDADE</button>
+          <p id="cidade" class="hidden"></p>
+          <button id="clearButton" class="botoes">LIMPAR CIDADE</button>
+          <script>
+            class CityDialog {
+                constructor() {
+                    this.openDialogButton = document.getElementById("openDialogButton");
+                    this.cidadeElemento = document.getElementById("cidade");
+                    this.clearButton = document.getElementById("clearButton");
+                    this.initialize();
+                }
+    
+                initialize() {
+                    this.openDialogButton.addEventListener("click", this.openDialog.bind(this));
+                    this.clearButton.addEventListener("click", this.clearCity.bind(this));
+                    window.addEventListener("load", this.checkLocalStorage.bind(this));
+                }
+    
+                openDialog() {
+                    const cidade = prompt("Qual é a sua cidade?");
+                    if (cidade !== null && cidade.trim() !== "") {
+                        localStorage.setItem("cidade", cidade);
+                        this.displayCity();
+                    } else {
+                        alert("Por favor, digite o nome da sua cidade.");
+                    }
+                }
+    
+                displayCity() {
+                    const cidade = localStorage.getItem("cidade");
+                    this.cidadeElemento.innerHTML = "Você está em: " + cidade;
+                    this.cidadeElemento.classList.remove("hidden");
+                }
+    
+                clearCity() {
+                    localStorage.removeItem("cidade");
+                    this.cidadeElemento.innerHTML = "";
+                    this.cidadeElemento.classList.add("hidden");
+                }
+    
+                checkLocalStorage() {
+                    if (localStorage.getItem("cidade")) {
+                        this.displayCity();
+                    }
+                }
+            }
+    
+            const cityDialog = new CityDialog();
+        </script>
         
-        <button class="btn-primary" onclick="SelecaoCidade.confirmar()">CLIQUE AQUI E ESCREVA SUA CIDADE</button>
-        <button onclick="redirecionar()" class="btn-primary">CLIQUE E ACESSE A PÁGINA DE COMENTÁRIOS</button>
+        <button onclick="redirecionar()" class="botoes">CLIQUE E ACESSE A PÁGINA DE COMENTÁRIOS</button>
 
       </div>
     </div>

@@ -134,6 +134,7 @@ body {
   margin: auto;
   padding: 40px 0px;
   width: 300px;
+  margin-top: 100px;
 }
 
 .box5 .h2debaixo {
@@ -233,11 +234,11 @@ body {
 }
 
 /* Estilos do botão btn-primary */
-.btn-primary {
+.botoes {
   background: #7B1FA2;
   color: #fff;
   text-transform: uppercase;
-  padding: 10px 150px;
+  padding: 10px 50px;
   border: none;
   border-radius: 5px;
   letter-spacing: 1px;
@@ -248,12 +249,12 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-  .btn-primary {
+  .botoes {
     padding: 10px 100px;
   }
 }
 
-.btn-primary:hover {
+.botoes:hover {
   background: #3f214d;
   cursor: pointer;
 }
