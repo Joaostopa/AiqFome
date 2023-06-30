@@ -1,113 +1,214 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aiqfome - delivery de restaurantes, pet shop e convêniencias no app</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="shortcut icon" href="aiqfomefavicon.png" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aiqfome - delivery de restaurantes, pet shop e conveniências no app</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="shortcut icon" href="aiqfomefavicon.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap');
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2? family=Poppins:ital,wght@1,900&display=swap');
-    </style>
+    /* Estilos CSS personalizados aqui */
+  </style>
+  <script>
+    // Coloque o código JavaScript aqui
 
-    <script>
-        function openDialog() {
-            var dialogOverlay = document.createElement('div');
-            dialogOverlay.className = 'dialog-overlay';
+    class Alerta {
+      static exibir(mensagem) {
+        window.alert(mensagem);
+      }
+    }
 
-            var dialogBox = document.createElement('div');
-            dialogBox.className = 'dialog-box';
-
-            var dialogHeader = document.createElement('div');
-            dialogHeader.className = 'dialog-header';
-            dialogHeader.textContent = 'Caixa de Diálogo';
-
-            var dialogContent = document.createElement('div');
-            dialogContent.className = 'dialog-content';
-            dialogContent.innerHTML = '<p>Conteúdo da caixa de diálogo</p>';
-
-            var dialogButtons = document.createElement('div');
-            dialogButtons.className = 'dialog-buttons';
-
-            var dialogCancelButton = document.createElement('button');
-            dialogCancelButton.className = 'dialog-button';
-            dialogCancelButton.textContent = 'Cancelar';
-            dialogCancelButton.addEventListener('click', closeDialog);
-
-            var dialogConfirmButton = document.createElement('button');
-            dialogConfirmButton.className = 'dialog-button';
-            dialogConfirmButton.textContent = 'Confirmar';
-
-            dialogButtons.appendChild(dialogCancelButton);
-            dialogButtons.appendChild(dialogConfirmButton);
-
-            dialogBox.appendChild(dialogHeader);
-            dialogBox.appendChild(dialogContent);
-            dialogBox.appendChild(dialogButtons);
-
-            dialogOverlay.appendChild(dialogBox);
-            document.body.appendChild(dialogOverlay);
+    class SelecaoCidade {
+      static confirmar() {
+        const city = window.prompt("Escolha sua cidade:");
+        if (city) {
+          SelecaoCidade.selecionar(city);
         }
+      }
 
-        function closeDialog() {
-            var dialogOverlay = document.querySelector('.dialog-overlay');
-            if (dialogOverlay) {
-                dialogOverlay.remove();
+      static async obterCidades() {
+        const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/municipios');
+        const cities = await response.json();
+        const cityDropdown = document.getElementById("cityDropdown");
+
+        cities.forEach(city => {
+          const cityLink = document.createElement("a");
+          cityLink.textContent = city.nome;
+          cityLink.href = "#";
+          cityLink.addEventListener("click", function() {
+            SelecaoCidade.selecionar(city.nome);
+          });
+          cityLink.classList.add("city-item");
+          cityDropdown.appendChild(cityLink);
+        });
+      }
+
+      static selecionar(cityName) {
+        const selectedCitySpan = document.getElementById("selectedCity");
+        selectedCitySpan.textContent = "Sua cidade é: " + cityName;
+      }
+
+      static filtrarCidades() {
+        const searchInput = window.prompt("Digite o nome da cidade:");
+        if (searchInput) {
+          const filter = searchInput.toUpperCase();
+          const cityDropdown = document.getElementById("cityDropdown");
+          const cities = cityDropdown.getElementsByTagName("a");
+
+          for (let i = 0; i < cities.length; i++) {
+            const cityName = cities[i].textContent || cities[i].innerText;
+            if (cityName.toUpperCase().indexOf(filter) > -1) {
+              cities[i].style.display = "";
+            } else {
+              cities[i].style.display = "none";
             }
+          }
         }
-    </script>
+      }
+    }
+
+    class Postagem {
+      static criar() {
+        const titleInput = document.getElementById("postTitle");
+        const contentInput = document.getElementById("postContent");
+
+        const newPost = {
+          id: posts.length + 1,
+          title: titleInput.value,
+          content: contentInput.value
+        };
+
+        posts.push(newPost);
+        Postagem.exibir(); // Atualiza a exibição das postagens após a criação
+        titleInput.value = "";
+        contentInput.value = "";
+      }
+
+      static exibir() {
+        const postsContainer = document.getElementById("postsContainer");
+        postsContainer.innerHTML = ""; // Limpa o conteúdo atual
+
+        posts.forEach(post => {
+          const postElement = document.createElement("div");
+          postElement.classList.add("post");
+          postElement.innerHTML = `
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+            <button onclick="Postagem.excluir(${post.id})">Excluir</button>
+          `;
+          postsContainer.appendChild(postElement);
+        });
+      }
+
+      static excluir(postId) {
+        posts = posts.filter(post => post.id !== postId);
+        Postagem.exibir(); // Atualiza a exibição das postagens após a exclusão
+      }
+    }
+
+    // Exemplo de uso
+
+    Alerta.exibir("Seja bem-vindo");
+    SelecaoCidade.obterCidades();
+    Postagem.exibir();
+
+    // Função para filtrar cidades usando uma caixa de diálogo
+    function filterCities() {
+      const searchInput = window.prompt("Digite o nome da cidade:");
+      if (searchInput) {
+        const filter = searchInput.toUpperCase();
+        const cityDropdown = document.getElementById("cityDropdown");
+        const cities = cityDropdown.getElementsByTagName("a");
+
+        for (let i = 0; i < cities.length; i++) {
+          const cityName = cities[i].textContent || cities[i].innerText;
+          if (cityName.toUpperCase().indexOf(filter) > -1) {
+            cities[i].style.display = "";
+          } else {
+            cities[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body>
-    <navbar id="navbar">
-        <div class="navbar-container">
-            <img src="logo navbar.png" alt="" class="logo" />
-        </div>
-    </navbar>
+  <div class="box1">
+    <img src="aiqfomelogo.png" alt="aiqfome logo" class="logo">
+    <span class="selected-city" id="selectedCity"></span>
+    <div id="cityDropdown" class="dropdown-content"></div>
+  </div>
 
-    <div class="box2">
-        <div style="text-align: center;"><p class="h2">aiqfome - os melhores restaurantes da sua cidade</p></div>
+  <div class="box3">
+    <div class="background">
+      <div class="texto">
+        <p style="text-align: center; color: white;">oie, bem-vindo à fominhaland, eu serei sua guia pelo mundo do delivery. aqui à sua direita vemos a vila burguer, ali à sua esquerda temos o parque das pizzas, e logo à frente fica o maravilhoso banco de cupons. divirta-se! \o/</p>
+      </div>
+      <div style="text-align: center;">
+        <button class="btn-primary" onclick="SelecaoCidade.confirmar()">ESCOLHER CIDADE</button>
+      </div>
     </div>
-    <div class="box3">
-        <form id="postForm">
-            <input type="text" id="postInput" placeholder="Digite sua postagem...">
-            <button type="submit">Postar</button>
-        </form>
-        <form id="searchForm">
-            <input type="text" id="searchInput" placeholder="Digite sua busca...">
-            <button type="submit">Buscar</button>
-        </form>
-        <div class="background">
-            <div class="texto">
-                <p style="text-align: center; color: white;">oie, bem vindo à fominhaland, eu serei sua guia pelo mundo do delivery. aqui à sua direita vemos a vila burguer, ali à sua esquerda temos o parque das pizzas, e logo à frente fica o maravilhoso banco de cupons. divirta-se! \o/</p>
-            </div>
-            <div style="text-align: center;">
-                <button class="btn-primary" onclick="openDialog()">Abrir Caixa de Diálogo</button>
-            </div>
-        </div>
-    </div>
+  </div>
 
-    <div class="box5">
-        <p class="h2debaixo" style="text-align: center;color: #7B1FA2;">como que faz, hein, aiq?🤔</p>
-        <p style="text-align: center; color: rgb(97, 95, 95);">é assim ó:</p>
-    </div>
-    <div class="items"></div>
+  <div class="box5">
+    <p class="h2debaixo" style="text-align: center;color: #7B1FA2;">como que faz, hein, aiq?🤔</p>
+    <p style="text-align: center; color: rgb(97, 95, 95);">é assim ó:</p>
+  </div>
 
-    <div class="caixa1">
-        <img src="app.png" class="imagem1">
-        <h3 style="color: rgb(22, 145, 145);"> quer comer o que?.</h3>
-        <p style="color: rgb(97, 95, 95)">você escolhe o rango e o restaurante.</p>
+  <div class="items"></div>
+
+  <div class="caixa1">
+    <img src="app.png" class="imagem1">
+    <h3 style="color: rgb(22, 145, 145);"> quer comer o que?.</h3>
+    <p style="color: rgb(97, 95, 95)">você escolhe o rango e o restaurante.</p>
+  </div>
+
+  <div class="caixa2">
+    <img src="moto.png" class="imagem2">
+    <h3 style="color: rgb(22, 145, 145);"> pediu, pagou, entregou.</h3>
+    <p style="color: rgb(97, 95, 95);">dá para pagar no app ou na hora da entrega.</p>
+  </div>
+
+  <div class="caixa3" >
+    <img src="prato.png" class="imagem3">
+    <h3 style="color: rgb(22, 145, 145);"> procura algo especial?.</h3>
+    <p style="color: rgb(97, 95, 95);">busca e experimenta pratos variados.</p>
+  </div>
+
+  <div class="box8">
+    <h3 class="titulo" style="color: rgb(22, 145, 145);"> conheça nosso delivery.</h3>
+    <p class="text" style="color: rgb(97, 95, 95);">experimente a forma mais fácil de pedir delivery em sua cidade.</p>
+  </div>
+
+  <div class="box9">
+    <h3 class="titulo2" style="color: rgb(22, 145, 145);">depoimentos</h3>
+    <div id="postsContainer"></div>
+  </div>
+
+  <div class="box10">
+    <h3 class="titulo3" style="color: rgb(22, 145, 145);">deixe seu depoimento</h3>
+    <div>
+      <input type="text" id="postTitle" placeholder="Título do depoimento">
+      <textarea id="postContent" placeholder="Conteúdo do depoimento"></textarea>
+      <button onclick="Postagem.criar()">Criar Depoimento</button>
     </div>
-    <div class="caixa2">
-        <img src="moto.png" class="imagem2">
-        <h3 style="color: rgb(22, 145, 145);"> pediu, pagou, entregou.</h3>
-        <p style="color: rgb(97, 95, 95);">dá para pagar no app ou na hora da entrega.</p>
-    </div>
-    <div class="caixa3">
-        <img src="prato.png" class="imagem3">
-        <h3 style="color: rgb(22, 145, 145);"> momento de glória</h3>
-        <p style="color: rgb(97, 95, 95)">depois é só avaliar, para dar aquele feedback para o restaurante.</p>
-    </div>
+  </div>
+
+  <div class="box11">
+    <h3 class="titulo4" style="color: rgb(22, 145, 145);">filtrar cidades</h3>
+    <button onclick="filterCities()">Filtrar Cidades</button>
+  </div>
+
+  <div class="box12">
+    <h3 class="titulo5" style="color: rgb(22, 145, 145);">nossos serviços</h3>
+    <ul>
+      <li>Delivery de Restaurantes</li>
+      <li>Delivery de Pet Shop</li>
+      <li>Delivery de Conveniências</li>
+    </ul>
+  </div>
 </body>
 </html>
