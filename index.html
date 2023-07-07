@@ -11,6 +11,22 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,900&display=swap');
   </style>
   <script>
+     function exibirMensagemBoasVindas() {
+            alert('Bem-vindo ao nosso website!\n\nDesenvolvido por João Victor Guidorizi e João Vitor Stopa');
+        }
+
+        function exibirRecursos() {
+            var recursos = 'Você pode:\n\n';
+            recursos += '- Adicionar qual cidade você está;\n';
+            recursos += '- Acessar nossa página de comentários e deixar seu comentário;\n';
+            recursos += '- Adicionar e excluir a imagem que quiser!';
+            alert(recursos);
+        }
+
+        window.onload = function() {
+            exibirMensagemBoasVindas();
+            setTimeout(exibirRecursos, 500);
+        }
     // Coloque o código JavaScript aqui
 
     class Alerta {
@@ -59,6 +75,8 @@
   </div>
 
   <div class="box3">
+  
+    
     <div class="background">
       <div class="texto">
         <p style="text-align: center; color: white;">oie, bem-vindo à fominhaland, eu serei sua guia pelo mundo do delivery. aqui à sua direita vemos a vila burguer, ali à sua esquerda temos o parque das pizzas, e logo à frente fica o maravilhoso banco de cupons. divirta-se! \o/</p>
@@ -119,9 +137,94 @@
 
       </div>
     </div>
+    
   </div>
 
   <div class="box5">
+    
+    <h3>Você pode adicionar uma imagem e exclui-la!</h3>
+    <style>
+         .btn {
+            background-color: #69008A;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        #imagem {
+            display: block;
+            max-width: 100%;
+            max-height: auto;
+            margin-top: 20px;
+        }
+    </style>
+
+    
+    <label for="input-imagem" class="btn">Adicionar Imagem</label>
+    <input type="file" id="input-imagem" accept="image/*" onchange="exibirImagem(event)">
+    
+    <img id="imagem">
+
+    <button onclick="excluirImagem()" class="btn">Excluir Imagem</button>
+
+    <script>
+        function exibirImagem(event) {
+            var imagem = document.getElementById('imagem');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var base64Img = e.target.result;
+                imagem.src = base64Img;
+                localStorage.setItem('imagem', base64Img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function excluirImagem() {
+            var imagem = document.getElementById('imagem');
+            if (imagem.src !== '') {
+                var confirmacao = confirm('Tem certeza que deseja excluir a imagem?');
+                if (confirmacao) {
+                    imagem.src = '';
+                    localStorage.removeItem('imagem');
+                    document.getElementById('input-imagem').value = '';
+                }
+            }
+        }
+
+        function exibirMensagemBoasVindas() {
+            alert('Bem-vindo ao nosso website!\n\nDesenvolvido por João Victor Guidorizi e João Vitor Stopa');
+        }
+
+        function exibirRecursos() {
+            var recursos = 'Você pode:\n\n';
+            recursos += '- Adicionar qual cidade você está;\n';
+            recursos += '- Acessar nossa página de comentários e deixar seu comentário;\n';
+            recursos += '- Adicionar e excluir a imagem que quiser!';
+            alert(recursos);
+        }
+
+        window.onload = function() {
+            exibirMensagemBoasVindas();
+            setTimeout(exibirRecursos, 500);
+
+            var imagemSalva = localStorage.getItem('imagem');
+            if (imagemSalva) {
+                var imagem = document.getElementById('imagem');
+                imagem.src = imagemSalva;
+            }
+        };
+      
+    </script>
     <p class="h2debaixo" style="text-align: center;color: #7B1FA2;">como que faz, hein, aiq?🤔</p>
     <p style="text-align: center; color: rgb(97, 95, 95);">é assim ó:</p>
   </div>
